@@ -1,0 +1,92 @@
+/*!
+@file
+@defgroup memory_management
+@brief  Header file for malloc
+This file contains functions implementation from libs (malloc.h)
+*/
+#ifndef IMPLEMENTING_LIBC_INCLUDE_MEMORY_H_
+#define IMPLEMENTING_LIBC_INCLUDE_MEMORY_H_
+
+#include <stddef.h>
+#include <string.h>
+#include <unistd.h>
+
+/*!
+ * @ingroup memory_management
+ *
+ * @brief Memory block characteristic
+ */
+typedef struct __mcb_t_t {
+  unsigned long size;         ///< Memory block size
+  unsigned char is_available; ///< 1 is free else 0
+} mcb_t;
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Allocates size bytes of uninitialized storage.
+ *
+ * @param size Number of bytes to allocate.
+ *
+ * @returns On success, returns the pointer to the beginning of newly allocated
+ * memory.
+ */
+void *simple_malloc(unsigned long size);
+
+/**
+ * @ingroup memory management
+ *
+ * @brief Deallocates the space previously allocated by malloc(), calloc(),
+ * realoc().
+ *
+ * @param ptr Pointer to the memory to deallocate.
+ */
+void simple_free(void *ptr);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Allocates memory for an array of num objects of size size and
+ * initializes it to all bits zero.
+ *
+ * @param num Number of objects.
+ * @param size Size of each object.
+ *
+ * @returns On success, returns the pointer to the beginning of newly allocated
+ * memory.
+ */
+void *simple_calloc(unsigned long num, unsigned long size);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Reallocates the given area of memory.
+ *
+ * @param num Number of objects.
+ * @param ptr Pointer to the memory area to be reallocated
+ * @param new_size New size of the array in bytes.
+ *
+ * @returns On success, returns the pointer to the beginning of newly allocated
+ * memory.
+ */
+void *simple_realoc(void *ptr, unsigned long size);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Get a pointer to the first byte of the heap.
+ *
+ * @returns pointer to the first byte of the heap.
+ */
+void *get_first_bite();
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Get a pointer to the last byte of the heap.
+ *
+ * @returns pointer to the last byte of the heap.
+ */
+void *get_last_bite();
+
+#endif // IMPLEMENTING_LIBC_INCLUDE_MEMORY_H_
