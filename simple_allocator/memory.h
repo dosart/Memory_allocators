@@ -22,6 +22,14 @@ typedef struct __mcb_t_t {
 } mcb_t;
 
 /**
+ --------------------   ----------------   ----------------   ------------------
+ node1:                 not free memory    node2:             free memory
+ size = 10;                                size = 8;
+ is_available = 0;                         is_available = 1
+ --------------------   ----------------   ----------------   ------------------
+*/
+
+/**
  * @ingroup memory_management
  *
  * @brief Allocates size bytes of uninitialized storage.
