@@ -12,6 +12,7 @@ list.
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <unistd.h>
 
 /*!
  * @ingroup memory_management
@@ -37,14 +38,37 @@ typedef struct __mcb_t_t {
 /**
  * @ingroup memory_management
  *
+ * @brief Get pointer to fl_mcb_t.
+ *
+ * @param ptr Pointer to memory.
+ *
+ * @return Meta information for a region of memory.
+ */
+fl_mcb_t *fl_get_header_block(void *ptr);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Get pointer to memory from fl_mcb_t.
+ *
+ * @param ptr Meta information for a region of memory.
+ *
+ * @return pointer to memory
+ */
+void *fl_get_memory_block(fl_mcb_t *ptr);
+
+/**
+ * @ingroup memory_management
+ *
  * @brief Remove the node from the free list.
  * The head of the list is a global variable - global_head.
- * Maintains a linked list in a sorted state. List sorted by block start address
+ * Maintains a linked list in a sorted state. List sorted by block start
+ * address
  *
  * @param node Node to remove.
  * memory.
  */
-void fl_remove_node(fl_mcb_t *node);
+void fl_remove(fl_mcb_t *node);
 
 /**
  * @ingroup memory_management
@@ -109,12 +133,52 @@ fl_mcb_t *fl_cut_off(fl_mcb_t *node, size_t size);
 /**
  * @ingroup memory_management
  *
- * @brief Get pointer to memory from fl_mcb_t.
+ * @brief Combine blocks with adjacent addresses in a free list.
+ * The function iterates for each block in the free list and combines blocks
+ * with adjacent addresses.
  *
- * @param ptr Meta information for a region of memory.
- *
- * @return pointer to memory
+ * @param header pointer to head of free list.
  */
-void *fl_get_memory_block(fl_mcb_t *ptr);
+void fl_merge_adjacent_blocks(fl_mcb_t *head);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Return true if blocks are adjacent.
+ *
+ * @param current pointer to the one block.
+ * @param next pointer to the next adjacent block.
+ *
+ * @return Return true if blocks are adjacent
+ */
+bool fl_is_adjacent_blocks(fl_mcb_t *current, fl_mcb_t *next);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Combine two blocks with adjacent addresses.
+ *
+ * @param current pointer to the one block.
+ * @param next pointer to the next adjacent block.
+ *
+ */
+void fl_merge(fl_mcb_t *current, fl_mcb_t *next);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Return the OS block if it is too big.
+ *
+ * @param last Pointer to the last block.
+ *
+ */
+void fl_return_last_block_os(fl_mcb_t *last);
+
+/**
+ * @ingroup memory_management
+ *
+ * @brief Returns the minimum block size to delete.
+ */
+size_t get_min_dealock();
 
 #endif

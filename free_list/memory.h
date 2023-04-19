@@ -8,19 +8,16 @@ This file contains functions implementation from libs (malloc.h)
 #define FREE_LIST_H_
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <unistd.h>
+
+#include "free_list.h"
 
 void fl_print_aligin(size_t size);
 
-typedef struct __mcb_t_t {
-	size_t		size;
-	struct __mcb_t_t   *next;
-	struct __mcb_t_t   *prev;
-}	fl_mcb_t;
+void *fl_malloc(size_t size);
 
-void* fl_malloc(size_t size);
-
+void fl_free(void *ptr);
 
 #endif // FREE_LIST_H_
