@@ -37,7 +37,7 @@ add_compile_options(
 ##      Project options
 ##
 ###################################################################################################
-set(SOURCES free_list.c memory.c main.c memory.c)
-set(HEADERS free_list.h memory.h)
+set(SOURCES free_list_test.c free_list.c)
+set(HEADERS free_list.h)
         
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
