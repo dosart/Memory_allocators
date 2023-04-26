@@ -12,8 +12,8 @@ int main() {
   simple_free(str2);
   simple_free(str1);
 
-  arr1 = (int*)simple_malloc(sizeof(int) * 1024);
-  arr2 = (int*)simple_malloc(sizeof(int) * 2048);
+  arr1 = (int *)simple_malloc(sizeof(int) * 1024);
+  arr2 = (int *)simple_malloc(sizeof(int) * 2048);
 
   simple_free(arr1);
   simple_free(arr2);
@@ -25,7 +25,6 @@ int main() {
   simple_free(str3);
   simple_free(str2);
   simple_free(str1);
-
 
   arr1 = simple_malloc(sizeof(int) * 102);
   arr2 = simple_malloc(sizeof(int) * 20);
