@@ -14,14 +14,16 @@ static inline size_t make_align_size(size_t n);
 /**
  * @ingroup memory_management
  *
- * @brief Find a suitable block or request memory from the operating system if the block is not found.
+ * @brief Find a suitable block or request memory from the operating system if
+ * the block is not found.
  */
 static inline mcb_t *find_or_reserve_chunk(size_t size);
 
 /**
  * @ingroup memory_management
  *
- * @brief If the found block is larger than necessary, cut a piece from it (piece size of size).
+ * @brief If the found block is larger than necessary, cut a piece from it
+ * (piece size of size).
  */
 static inline mcb_t *split(mcb_t *chunk, size_t size);
 
@@ -35,14 +37,16 @@ static inline size_t min_size_for_allocate();
 /**
  * @ingroup memory_management
  *
- * @brief If the required size is less than one page, return the page size, otherwise return the size.
+ * @brief If the required size is less than one page, return the page size,
+ * otherwise return the size.
  */
 static inline size_t make_alloc_size(size_t size);
 
 /**
  * @ingroup memory_management
  *
- * @brief Request memory from the operating system and insert the allocated memory into the list.
+ * @brief Request memory from the operating system and insert the allocated
+ * memory into the list.
  */
 static inline mcb_t *allocate_chunk(mcb_t *prev, size_t size);
 

@@ -28,7 +28,7 @@ typedef struct __mcb_t_t {
 
 /**
  --------------------   ----------------   ----------------   ------------------
- node1:                 user data          node2:             user data 
+ node1:                 user data          node2:             user data
  size = 10;                                size = 8;
  is_available = 0;                         is_available = 1
  next = node2                              next = NULL
