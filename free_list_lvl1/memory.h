@@ -4,8 +4,8 @@
 @brief  Header file for malloc
 */
 
-#ifndef MEMORY_ALLOCATOR_LVL2
-#define MEMORY_ALLOCATOR_LVL2
+#ifndef FREE_LIST_LVL1
+#define FREE_LIST_LVL1
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,6 +19,10 @@ typedef intptr_t word_t;
  * @ingroup memory_management
  *
  * @brief Memory block characteristic
+ * Save the free blocks in the linked list. Each block has a pointer to the next
+ * block and the previous block.
+ * The pointer to the beginning of the linked list, stored at the beginning of
+ * the heap
  */
 typedef struct __mcb_t_t {
   size_t size; ///< Memory block size
@@ -30,8 +34,9 @@ typedef struct __mcb_t_t {
  --------------------   ----------------   ----------------   ------------------
  node1:                 user data          node2:             user data
  size = 10;                                size = 8;
- is_available = 0;                         is_available = 1
+
  next = node2                              next = NULL
+ prev = NULL                               prev = node1
  --------------------   ----------------   ----------------   ------------------
 */
 

@@ -27,12 +27,34 @@ static inline mcb_t *find_or_reserve_chunk(size_t size);
  */
 static inline mcb_t *split(mcb_t *chunk, size_t size);
 
+/**
+ * @ingroup memory_management
+ *
+ * @brief Insert new node to the free list.
+ */
 static inline void insert(mcb_t **head, mcb_t *new_node);
 
+/**
+ * @ingroup memory_management
+ *
+ * @brief Remove the node from the free list.
+ */
 static inline void remove(mcb_t **head, mcb_t *node);
 
+/**
+ * @ingroup memory_management
+ *
+ * @brief Get address of block.
+ */
 static inline char *address(mcb_t *node);
 
+/**
+ * @ingroup memory_management
+ *
+ * @brief Scan the free list  and find adjacent blocks. If
+ * the blocks can be combined, do it. Two adjacent free blocks can be combined
+ * into one.
+ */
 static inline void merge_adjacent_chunks(mcb_t **head);
 
 /**
@@ -183,13 +205,13 @@ static inline void insert(mcb_t **head, mcb_t *node) {
     node->next = *head;
     *head = node;
   } else {
-    mcb_t *cur = *head;
-    while (cur->next && address(cur->next) < address(node)) {
-      cur = cur->next;
+    mcb_t *curr = *head;
+    while (curr->next && address(curr->next) < address(node)) {
+      curr = curr->next;
     }
-    node->next = cur->next;
-    node->prev = cur;
-    cur->next = node;
+    node->next = curr->next;
+    node->prev = curr;
+    curr->next = node;
   }
 }
 
@@ -211,14 +233,14 @@ static inline bool is_adjacent(mcb_t *first, mcb_t *second) {
   return (first_address + first->size + sizeof(mcb_t) == second_address);
 }
 
+static inline char *address(mcb_t *node) { return (char *)node; }
+
 static inline void merge(mcb_t *current, mcb_t *next) {
   current->size += chunk_size(next->size);
   current->next = next->next;
   if (next->next)
     next->next->prev = current;
 }
-
-static inline char *address(mcb_t *node) { return (char *)node; }
 
 static inline mcb_t *allocate_chunk(mcb_t *prev, size_t size) {
   size = make_alloc_size(size);
